@@ -43,6 +43,16 @@ func main() {
 		writer.WriteHeader(http.StatusOK)
 		writer.Write([]byte(fmt.Sprintf("%s %s %s %f\n", stats.MaxRtt, stats.MinRtt, stats.AvgRtt, stats.PacketLoss)))
 	})
+	http.HandleFunc("/connect", func(writer http.ResponseWriter, request *http.Request) {
+		request.ParseForm()
+		addr := request.Form.Get("addr")
+		_, err := net.DialTimeout("tcp", addr+":80", 5*time.Second)
+		if err != nil {
+			writer.WriteHeader(http.StatusOK)
+			writer.Write([]byte(err.Error()))
+		}
+		writer.WriteHeader(http.StatusOK)
+	})
 	//os.Setenv("PORT", "18080")
 	fmt.Println("listen port: " + os.Getenv("PORT"))
 	http.ListenAndServe(strings.Join([]string{"", os.Getenv("PORT")}, ":"), nil)
