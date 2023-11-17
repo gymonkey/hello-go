@@ -75,5 +75,5 @@ func getLocalIp() (string, error) {
 			// process IP address
 		}
 	}
-	return ips[0], nil
+	return ips[1], nil
 }
