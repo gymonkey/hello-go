@@ -19,6 +19,7 @@ func main() {
 			return
 		}
 		// handle err
+		ips := make([]string, 0)
 		for _, i := range ifaces {
 			addrs, err := i.Addrs()
 			if err != nil {
@@ -26,7 +27,6 @@ func main() {
 				writer.Write([]byte(err.Error()))
 				return
 			}
-			ips := make([]string, 0)
 			// handle err
 			for _, addr := range addrs {
 				var ip net.IP
