@@ -46,7 +46,7 @@ func main() {
 	http.HandleFunc("/connect", func(writer http.ResponseWriter, request *http.Request) {
 		request.ParseForm()
 		addr := request.Form.Get("addr")
-		_, err := net.DialTimeout("tcp", addr+":80", 5*time.Second)
+		_, err := net.DialTimeout("tcp", addr, 5*time.Second)
 		if err != nil {
 			writer.WriteHeader(http.StatusOK)
 			writer.Write([]byte(err.Error()))
