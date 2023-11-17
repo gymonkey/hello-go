@@ -65,7 +65,7 @@ func main() {
 		writer.WriteHeader(http.StatusOK)
 		writer.Write([]byte(fmt.Sprintf("%s %s %s %f\n", stats.MaxRtt, stats.MinRtt, stats.AvgRtt, stats.PacketLoss)))
 	})
-	os.Setenv("PORT", "18080")
+	//os.Setenv("PORT", "18080")
 	fmt.Println("listen port: " + os.Getenv("PORT"))
 	http.ListenAndServe(strings.Join([]string{"", os.Getenv("PORT")}, ":"), nil)
 }
