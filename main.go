@@ -39,10 +39,10 @@ func main() {
 				ips = append(ips, ip.String())
 				// process IP address
 			}
-			writer.WriteHeader(http.StatusOK)
-			writer.Write([]byte(strings.Join(ips, ",")))
-			return
 		}
+		writer.WriteHeader(http.StatusOK)
+		writer.Write([]byte(strings.Join(ips, ",")))
+		return
 	})
 	http.HandleFunc("/ping", func(writer http.ResponseWriter, request *http.Request) {
 		pinger, err := ping.NewPinger("www.google.com")
