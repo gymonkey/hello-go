@@ -36,7 +36,9 @@ func main() {
 				case *net.IPAddr:
 					ip = v.IP
 				}
-				ips = append(ips, ip.String())
+				if ip.To4() != nil {
+					ips = append(ips, ip.String())
+				}
 				// process IP address
 			}
 		}
@@ -63,6 +65,7 @@ func main() {
 		writer.WriteHeader(http.StatusOK)
 		writer.Write([]byte(fmt.Sprintf("%s %s %s %f\n", stats.MaxRtt, stats.MinRtt, stats.AvgRtt, stats.PacketLoss)))
 	})
+	os.Setenv("PORT", "18080")
 	fmt.Println("listen port: " + os.Getenv("PORT"))
 	http.ListenAndServe(strings.Join([]string{"", os.Getenv("PORT")}, ":"), nil)
 }
