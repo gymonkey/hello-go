@@ -14,7 +14,7 @@ func main() {
 		writer.WriteHeader(http.StatusOK)
 	})
 	http.HandleFunc("/inner", func(writer http.ResponseWriter, request *http.Request) {
-		resp, err := http.Get("http://10.116.8.153:8000/abc")
+		resp, err := http.Get("http://10.116.8.153:8080/abc")
 		if err != nil {
 			fmt.Println(err)
 			writer.WriteHeader(http.StatusInternalServerError)
