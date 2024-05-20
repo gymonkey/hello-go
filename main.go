@@ -8,13 +8,16 @@ import (
 
 func main() {
 	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
+		fmt.Println(request.RemoteAddr)
 		writer.WriteHeader(http.StatusOK)
 	})
 	http.HandleFunc("/inner", func(writer http.ResponseWriter, request *http.Request) {
+		fmt.Println(request.RemoteAddr)
 		writer.WriteHeader(http.StatusOK)
 		writer.Write([]byte("inner"))
 	})
 	http.HandleFunc("/outter", func(writer http.ResponseWriter, request *http.Request) {
+		fmt.Println(request.RemoteAddr)
 		writer.WriteHeader(http.StatusOK)
 		writer.Write([]byte("outter"))
 	})
