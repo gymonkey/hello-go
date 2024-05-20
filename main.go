@@ -8,6 +8,7 @@ import (
 )
 
 func main() {
+	http.DefaultClient.Timeout = 1 * time.Second
 	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
 		fmt.Println(request.RemoteAddr)
 		writer.WriteHeader(http.StatusOK)
