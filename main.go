@@ -24,7 +24,7 @@ func main() {
 	//})
 	//http.ListenAndServe(":8080", nil)
 	for {
-		fmt.Println("1" + strconv.FormatInt(time.Now().Unix(), 10))
+		fmt.Println("2" + strconv.FormatInt(time.Now().Unix(), 10))
 		time.Sleep(10 * time.Second)
 	}
 }
