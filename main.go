@@ -24,7 +24,7 @@ func main() {
 	})
 	http.HandleFunc("/inner", func(writer http.ResponseWriter, request *http.Request) {
 		ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
-		req, _ := http.NewRequestWithContext(ctx, http.MethodGet, "http://ip.sb", nil)
+		req, _ := http.NewRequestWithContext(ctx, http.MethodGet, "https://httpbin.org/ip", nil)
 		resp, err := http.DefaultClient.Do(req)
 		if err != nil {
 			writer.WriteHeader(http.StatusOK)
