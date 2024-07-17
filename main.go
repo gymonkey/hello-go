@@ -1,7 +1,9 @@
 package main
 
 import (
+	"context"
 	"fmt"
+	"io"
 	"net"
 	"net/http"
 	"time"
@@ -21,9 +23,19 @@ func main() {
 		}
 	})
 	http.HandleFunc("/inner", func(writer http.ResponseWriter, request *http.Request) {
-		//log.Println("recv req")
-		writer.WriteHeader(http.StatusOK)
-		writer.Write([]byte("inner"))
+		ctx, _ := context.WithTimeout(context.Background(), 5*time.Second)
+		req, _ := http.NewRequestWithContext(ctx, http.MethodGet, "https://hello-java-qrid5mtbrq-uc.a.run.app", nil)
+		resp, err := http.DefaultClient.Do(req)
+		if err != nil {
+			writer.WriteHeader(http.StatusOK)
+			writer.Write([]byte(err.Error()))
+		} else {
+			defer resp.Body.Close()
+			writer.WriteHeader(http.StatusOK)
+			writer.Write([]byte(resp.Status))
+			data, _ := io.ReadAll(resp.Body)
+			writer.Write(data)
+		}
 	})
 	http.HandleFunc("/outter", func(writer http.ResponseWriter, request *http.Request) {
 		fmt.Println(request.RemoteAddr)
