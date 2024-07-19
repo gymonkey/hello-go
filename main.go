@@ -38,9 +38,11 @@ func main() {
 		}
 	})
 	http.HandleFunc("/outter", func(writer http.ResponseWriter, request *http.Request) {
-		fmt.Println(request.RemoteAddr)
+		//fmt.Println(request.RemoteAddr)
 		writer.WriteHeader(http.StatusOK)
-		writer.Write([]byte("outter"))
+		data, _ := io.ReadAll(request.Body)
+		writer.Write([]byte(request.Header.Get("Authorization")))
+		writer.Write([]byte(data))
 	})
 	http.ListenAndServe(":8080", nil)
 	//for {
