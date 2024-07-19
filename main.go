@@ -41,8 +41,8 @@ func main() {
 		//fmt.Println(request.RemoteAddr)
 		writer.WriteHeader(http.StatusOK)
 		data, _ := io.ReadAll(request.Body)
-		writer.Write([]byte(request.Header.Get("Authorization")))
-		writer.Write([]byte(data))
+		fmt.Println(request.Header.Get("Authorization"))
+		fmt.Println(string(data))
 	})
 	http.ListenAndServe(":8080", nil)
 	//for {
