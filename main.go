@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"io"
-	"net"
 	"net/http"
 	"time"
 )
@@ -13,7 +12,7 @@ func main() {
 	http.DefaultClient.Timeout = 1 * time.Second
 	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
 		fmt.Println(request.RemoteAddr)
-		conn.Write([]byte("hello world"))
+		writer.Write([]byte("hello world"))
 		writer.WriteHeader(http.StatusOK)
 	})
 	http.HandleFunc("/inner", func(writer http.ResponseWriter, request *http.Request) {
