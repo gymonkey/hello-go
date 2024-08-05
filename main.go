@@ -13,14 +13,8 @@ func main() {
 	http.DefaultClient.Timeout = 1 * time.Second
 	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
 		fmt.Println(request.RemoteAddr)
-		conn, err := net.Dial("tcp", "192.168.0.24:8080")
-		if err != nil {
-			writer.WriteHeader(http.StatusOK)
-			writer.Write([]byte(err.Error()))
-		} else {
-			conn.Write([]byte("hello world"))
-			writer.WriteHeader(http.StatusOK)
-		}
+		conn.Write([]byte("hello world"))
+		writer.WriteHeader(http.StatusOK)
 	})
 	http.HandleFunc("/inner", func(writer http.ResponseWriter, request *http.Request) {
 		ctx, _ := context.WithTimeout(context.Background(), 20*time.Second)
