@@ -1,17 +1,26 @@
 package main
 
 import (
-	"github.com/elazarl/goproxy"
-	"log"
+	"github.com/gin-gonic/gin"
+	ginprometheus "github.com/zsais/go-gin-prometheus"
 	"net/http"
 )
 
 func main() {
 	//http.DefaultClient.Timeout = 1 * time.Second
 	//http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
-	//	fmt.Println(request.RemoteAddr)
-	//	writer.Write([]byte("hello world"))
-	//	writer.WriteHeader(http.StatusOK)
+	//	resp, err := http.DefaultClient.Do(request)
+	//	if err != nil {
+	//		writer.WriteHeader(http.StatusBadGateway)
+	//		writer.Write([]byte(err.Error()))
+	//	} else {
+	//		defer resp.Body.Close()
+	//		writer.WriteHeader(resp.StatusCode)
+	//		for key, val := range resp.Header {
+	//			writer.Header().Set(key, val[0])
+	//		}
+	//		io.Copy(writer, resp.Body)
+	//	}
 	//})
 	//http.HandleFunc("/inner", func(writer http.ResponseWriter, request *http.Request) {
 	//	ctx, _ := context.WithTimeout(context.Background(), 20*time.Second)
@@ -41,11 +50,11 @@ func main() {
 	//	fmt.Println("6" + strconv.FormatInt(time.Now().Unix(), 10))
 	//	time.Sleep(10 * time.Second)
 	//}
-	proxy := goproxy.NewProxyHttpServer()
-	proxy.Verbose = true
-	proxy.NonproxyHandler = http.HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
-		writer.WriteHeader(http.StatusOK)
-		writer.Write([]byte("always return ok"))
+	r := gin.Default()
+	p := ginprometheus.NewPrometheus("gin")
+	p.Use(r)
+	r.GET("/", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{"msg": "hello"})
 	})
-	log.Fatal(http.ListenAndServe(":8080", proxy))
+	r.Run()
 }
