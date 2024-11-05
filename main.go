@@ -1,27 +1,17 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	ginprometheus "github.com/zsais/go-gin-prometheus"
+	"fmt"
 	"net/http"
 )
 
 func main() {
-	//http.DefaultClient.Timeout = 1 * time.Second
-	//http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
-	//	resp, err := http.DefaultClient.Do(request)
-	//	if err != nil {
-	//		writer.WriteHeader(http.StatusBadGateway)
-	//		writer.Write([]byte(err.Error()))
-	//	} else {
-	//		defer resp.Body.Close()
-	//		writer.WriteHeader(resp.StatusCode)
-	//		for key, val := range resp.Header {
-	//			writer.Header().Set(key, val[0])
-	//		}
-	//		io.Copy(writer, resp.Body)
-	//	}
-	//})
+	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
+		for key, val := range request.Header {
+			fmt.Printf("key: %s values: %v\n", key, val)
+		}
+		writer.WriteHeader(http.StatusOK)
+	})
 	//http.HandleFunc("/inner", func(writer http.ResponseWriter, request *http.Request) {
 	//	ctx, _ := context.WithTimeout(context.Background(), 20*time.Second)
 	//	req, _ := http.NewRequestWithContext(ctx, http.MethodGet, "http://ip.sb/", nil)
@@ -45,16 +35,14 @@ func main() {
 	//	fmt.Println(request.Header.Get("Authorization"))
 	//	fmt.Println(string(data))
 	//})
-	//http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":8080", nil)
 	//for {
 	//	fmt.Println("6" + strconv.FormatInt(time.Now().Unix(), 10))
 	//	time.Sleep(10 * time.Second)
 	//}
-	r := gin.Default()
-	p := ginprometheus.NewPrometheus("gin")
-	p.Use(r)
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{"msg": "hello"})
-	})
-	r.Run()
+	//r := gin.Default()
+	//r.GET("/", func(c *gin.Context) {
+	//	c.JSON(http.StatusOK, gin.H{"msg": "hello"})
+	//})
+	//r.Run()
 }
