@@ -13,6 +13,7 @@ on:
 env:
   REPO_NAME: ${{ github.repository }} # 仓库名称 (例如：octocat/Spoon-Knife)
   IMAGE_NAME: hello-go # 你的 Docker 镜像名称，请替换
+  DOCKERFILE_PATH: ./Dockerfile
 
 jobs:
   build-and-push:
