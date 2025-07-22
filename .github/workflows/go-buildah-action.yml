@@ -54,7 +54,7 @@ jobs:
           image: ${{ env.IMAGE_NAME }} # 镜像名称
           tags: ${{ steps.meta.outputs.tags }} # 镜像标签
           containerfiles: |
-            ${{ env.DOCKERFILE_PATH }} # Dockerfile 路径
+            ${{ GITHUB_WORKSPACE }}/Dockerfile # Dockerfile 路径
           oci: false # 设置为 false，以便生成 Docker 兼容的镜像
           push: true # 推送到注册表
           registry: ghcr.io/${{ github.repository_owner }} # 注册表地址，通常是 ghcr.io/<你的用户名或组织名>
