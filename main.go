@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"time"
 )
 
 func main() {
@@ -13,13 +14,15 @@ func main() {
 	//	return
 	//}
 	//c := cr.New(s)
-	////input := &cr.GetUserInput{
-	////	Registry: volcengine.String("acc-test-cr"),
-	////}
-	////c.GetUser()
+	//input := &cr.GetUserInput{
+	//	Registry: volcengine.String("acc-test-cr"),
+	//}
+
+	//vefaas.ListRevisionsOutput{}
 
 	// 添加HTTP服务器监听8080端口
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		time.Sleep(10 * time.Second)
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte("Hello, World1111!"))
 	})
