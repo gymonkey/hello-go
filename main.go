@@ -22,6 +22,7 @@ func main() {
 
 	// 添加HTTP服务器监听8080端口
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Printf("Received request: %s\n", r.URL.Path)
 		time.Sleep(10 * time.Second)
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte("Hello, World1111!"))
